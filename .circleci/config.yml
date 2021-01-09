@@ -28,9 +28,9 @@ jobs:
       - run: 
           name: "Save Hello World to output.txt"
           command: |
-            mk dir temp
+            mkdir temp
             cd temp
-            mk dir workspace
+            mkdir workspace
             cd workspace
             echo "Hello World" > output.txt # this saves "Hello World" to the file output.txt
       - persist_to_workspace:
