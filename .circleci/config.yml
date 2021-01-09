@@ -44,7 +44,11 @@ workflows:
   welcome:
     # Run the greeting jobs in their own containers
     jobs:
-      - print_hello
-      - print_name:
+      #- print_hello
+      #- print_name:
+      #    requires:
+      #      - print_hello
+      - save_hello_world_output
+      - print_output_file:
           requires:
-            - print_hello
+            - save_hello_world_output
