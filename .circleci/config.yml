@@ -4,6 +4,24 @@ version: 2.1
 orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
+# Create custom jobs to be used in workflow
+jobs:
+  # This job prints "Hello" to stdout
+  print_hello:
+    # It uses the docker executor
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout # this pulls code from GitHub
+      - run: echo "Hello" # this prints "Hello" to stdout
+  # This job prints "World" to stdout
+  print_world:
+    # It uses the docker executor
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout # this pulls code from GitHub
+      - run: echo "World" # this prints "World" to stdout  
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "welcome"
@@ -11,3 +29,7 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - welcome/run
+      - print_hello
+      - print_world:
+          requires:
+            - print_hello
