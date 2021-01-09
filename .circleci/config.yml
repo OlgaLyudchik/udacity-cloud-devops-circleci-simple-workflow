@@ -25,7 +25,14 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout # this pulls code from GitHub
-      - run: echo "Hello World" > output.txt # this saves "Hello World" to the file output.txt
+      - run: 
+          name: "Save Hello World to output.txt"
+          command: |
+            mk dir temp
+            cd temp
+            mk dir workspace
+            cd workspace
+            echo "Hello World" > output.txt # this saves "Hello World" to the file output.txt
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
