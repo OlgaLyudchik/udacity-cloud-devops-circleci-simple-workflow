@@ -28,8 +28,8 @@ jobs:
       - run: 
           name: "Save Hello World to output.txt"
           command: |
-            mkdir temp
-            cd temp
+            mkdir tmp
+            cd tmp
             mkdir workspace
             cd workspace
             echo "Hello World" > output.txt # this saves "Hello World" to the file output.txt
