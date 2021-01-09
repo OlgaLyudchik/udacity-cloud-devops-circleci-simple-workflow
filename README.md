@@ -1,1 +1,3 @@
-# udacity-cloud-devops-circleci-simple-workflow
+# Simple Workflow in CircleCI
+
+This project creates a simple workflow in CircleCI.
