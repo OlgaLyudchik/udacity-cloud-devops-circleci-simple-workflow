@@ -27,14 +27,9 @@ jobs:
       - checkout # this pulls code from GitHub
       - run: 
           name: "Save Hello World to output.txt"
-          command: |
-            mkdir tmp
-            cd tmp
-            mkdir workspace
-            cd workspace
-            echo "Hello World" > output.txt # this saves "Hello World" to the file output.txt
+          command: echo "Hello World" > ~/output.txt # this saves "Hello World" to the file output.txt
       - persist_to_workspace:
-          root: /tmp/workspace/
+          root: ~/
           paths:
             - output.txt
   print_output_file:
@@ -43,8 +38,8 @@ jobs:
     steps:
       - checkout # this pulls code from GitHub
       - attach_workspace:
-          at: /tmp/workspace/
-      - run: cat output.txt # this print content of the output.txt to stdout
+          at: ~/
+      - run: cat ~/output.txt # this print content of the output.txt to stdout
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "welcome"
