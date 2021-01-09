@@ -20,6 +20,24 @@ jobs:
           command: |
             MY_NAME="Olga Lyudchik"
             echo $MY_NAME
+  save_hello_world_output:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout # this pulls code from GitHub
+      - run: echo "Hello World" > output.txt # this saves "Hello World" to the file output.txt
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - dist
+  print_output_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout # this pulls code from GitHub
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: cat output.txt # this print content of the output.txt to stdout
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "welcome"
