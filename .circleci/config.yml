@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout # this pulls code from GitHub
       - run: echo "Hello" # this prints "Hello" to stdout
-  # This job prints your name to stdout using env variable defined in CircleCI
+  # This job prints your name to stdout using env variable
   print_name:
     docker:
       - image: circleci/node:13.8.0
@@ -20,6 +20,7 @@ jobs:
           command: |
             MY_NAME="Olga Lyudchik"
             echo $MY_NAME
+  # This job saves Hello World to the file and shares that file with another jobs via workspace
   save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
@@ -32,6 +33,7 @@ jobs:
           root: ~/
           paths:
             - output.txt
+  # This job prints the content of shared file
   print_output_file:
     docker:
       - image: circleci/node:13.8.0
@@ -46,10 +48,10 @@ workflows:
   welcome:
     # Run the greeting jobs in their own containers
     jobs:
-      #- print_hello
-      #- print_name:
-      #    requires:
-      #      - print_hello
+      - print_hello
+      - print_name:
+          requires:
+            - print_hello
       - save_hello_world_output
       - print_output_file:
           requires:
