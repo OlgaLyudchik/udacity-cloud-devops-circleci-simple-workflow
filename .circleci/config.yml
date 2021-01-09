@@ -15,7 +15,11 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout # this pulls code from GitHub
-      - run: echo $MY_NAME # this prints your name to stdout  
+      - run: 
+          name: "Set a custom env variable"
+          command: |
+            MY_NAME="Olga Lyudchik"
+            echo $MY_NAME
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "welcome"
