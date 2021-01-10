@@ -1,13 +1,16 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
+
 # Create reusable commands
 commands:
   print_pipeline_id:
     description: "Command that prints circle workfow id"
     steps:
       - run: echo $CIRCLE_WORKFLOW_ID
+
 # Create custom jobs to be used in workflow
 jobs:
+
   # This job prints "Hello" to stdout
   print_hello:
     docker:
@@ -15,6 +18,7 @@ jobs:
     steps:
       - checkout # this pulls code from GitHub
       - run: echo "Hello" # this prints "Hello" to stdout
+
   # This job prints your name to stdout using env variable
   print_name:
     docker:
@@ -26,6 +30,7 @@ jobs:
           command: |
             MY_NAME="Olga Lyudchik"
             echo $MY_NAME
+
   # This job saves Hello World to the file and shares that file with another jobs via workspace
   save_hello_world_output:
     docker:
@@ -39,6 +44,7 @@ jobs:
           root: ~/
           paths:
             - output.txt
+
   # This job prints the content of shared file
   print_output_file:
     docker:
@@ -48,11 +54,23 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: cat ~/output.txt # this print content of the output.txt to stdout
+
+  # This job prints circleci workflow id    
   print_pipeline_id_using_command:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id
+  
+  # This job prints 'Hello Error' on failure
+  prints_hello_error:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: 
+        command: echo "Hello Error!"
+        when: on_fail
+
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "welcome"
@@ -68,3 +86,4 @@ workflows:
           requires:
             - save_hello_world_output
       - print_pipeline_id_using_command
+      - prints_hello_error
